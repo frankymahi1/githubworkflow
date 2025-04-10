@@ -57,5 +57,7 @@
          env:
            PYTHONPATH: ./src
          run: python test/test_calculator.py
-
+     Reporting:
+       runs-on: ubuntu-latest
+       needs: run_test_cases
 
