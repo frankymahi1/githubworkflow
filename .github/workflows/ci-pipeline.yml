@@ -49,9 +49,9 @@
            pip install -r requirements.txt
 
        - name: Step 1 - Execute data Registration
-         run: python data_registration.py.py
+         run: python test/data_registration.py
 
        - name: Step 2 - Execute schema Registration
-         run: python schema_registration.py.py
+         run: python test/schema_registration.py
 
 
