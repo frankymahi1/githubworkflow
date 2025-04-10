@@ -1,6 +1,9 @@
 name: Complex CI/CD Demo
-
 on:
+  push:
+    branches: [ main, github_test_branch ]
+  pull_request:
+    branches: [ main, github_test_branch ]
   workflow_dispatch:
     inputs:
       environment:
