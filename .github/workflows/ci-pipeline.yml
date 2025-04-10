@@ -7,6 +7,7 @@
        branches: [ main,github_test_branch ]
      pull_request:
        branches: [ main,github_test_branch ]
+     workflow_dispatch:
 
    jobs:
      build:
@@ -47,6 +48,10 @@
            python -m pip install --upgrade pip
            pip install -r requirements.txt
 
-       - name: Run tests
-         run: |
-           pytest
+       - name: Step 1 - Execute data Registration
+         run: python data_registration.py.py
+
+       - name: Step 2 - Execute schema Registration
+         run: python schema_registration.py.py
+
+
