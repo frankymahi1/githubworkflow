@@ -32,8 +32,8 @@
            pytest
 
      run_test_cases:
-
        runs-on: ubuntu-latest
+       needs: build  # This line makes run_test_cases dependent on build
 
        steps:
        - uses: actions/checkout@v2
