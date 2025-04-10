@@ -1,6 +1,6 @@
 # test_calculator.py
 
-from test.calculator import add
+from .calculator import add
 
 
 def test_add_positive_numbers():
