@@ -4,9 +4,9 @@
 
    on:
      push:
-       branches: [ main ]
+       branches: [ main,github_test_branch ]
      pull_request:
-       branches: [ main ]
+       branches: [ main,github_test_branch ]
 
    jobs:
      build:
