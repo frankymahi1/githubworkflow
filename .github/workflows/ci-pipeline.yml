@@ -54,6 +54,7 @@
          pip install -r requirements.txt
 
      - name: Execute specific script
+        echo "Running script for ${{ matrix.job }}"
        run: |
           if [ "${{ matrix.job }}" == "virtual_dataset_registration" ]; then
             python test/data_registration.py
