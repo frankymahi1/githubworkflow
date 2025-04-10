@@ -34,6 +34,10 @@
      run_test_cases:
        runs-on: ubuntu-latest
        needs: build  # This line makes run_test_cases dependent on build
+       strategy:
+         matrix:
+           job: [ child_job_1, child_job_2, child_job_3, child_job_4 ]
+
 
        steps:
        - uses: actions/checkout@v2
@@ -47,6 +51,9 @@
          run: |
            python -m pip install --upgrade pip
            pip install -r requirements.txt
+       - name: Execute child job
+         run: |
+          echo "Running ${{ matrix.job }}"           
 
        - name: Step 1 - Execute data Registration
          run: python test/data_registration.py
