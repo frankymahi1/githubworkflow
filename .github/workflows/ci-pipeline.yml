@@ -36,7 +36,7 @@
        needs: build  # This line makes run_test_cases dependent on build
        strategy:
          matrix:
-           job: [ child_job_1, child_job_2, child_job_3, child_job_4 ]
+           job: [ virtual_dataset_registration, physical_dataset_registration, task_flow_execution, schema_registation, databricks_notebook ]
 
 
        steps:
