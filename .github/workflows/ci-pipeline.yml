@@ -54,6 +54,8 @@
        - name: Step 2 - Execute schema Registration
          run: python test/schema_registration.py
        - name: Step 3 - Test calculator functionality
+         env:
+           PYTHONPATH: ./src
          run: python test/test_calculator.py
 
 
