@@ -5,9 +5,9 @@
 
  on:
     push:
-      branches: [ main, github_test_branch ]
+      branches: [ main, github_test_branch,github_test_branch_v1 ]
     pull_request:
-      branches: [ main, github_test_branch ]
+      branches: [ main, github_test_branch,github_test_branch_v1 ]
     workflow_dispatch:  # Allows manual triggering of the workflow
 
  jobs:
