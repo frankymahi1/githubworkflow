@@ -1,7 +1,5 @@
-import os
 import pytest
-import yaml
-from test.config_loader import load_config
+from config_loader import load_config
 config = load_config()
 
 # Parametrize the test case for nas_to_azure
