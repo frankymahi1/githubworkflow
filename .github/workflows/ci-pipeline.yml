@@ -57,7 +57,6 @@
        matrix:
          job: [ sql_to_azure, nas_to_azure, s3_to_azure, cybase_to_azure, rest_api_to_azure ]
 
-
      steps:
      - uses: actions/checkout@v2
 
