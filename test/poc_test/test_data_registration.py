@@ -1,4 +1,4 @@
-# data_registration.py
+# test_data_registration.py
 
 import pytest
 
