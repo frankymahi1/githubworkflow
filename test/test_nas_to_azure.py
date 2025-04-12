@@ -1,6 +1,6 @@
 import pytest
 
-from config_loader import load_config
+from test.config_loader import load_config
 
 # Load the configuration
 config = load_config()
