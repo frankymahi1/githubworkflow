@@ -2,9 +2,10 @@
 
 import yaml
 
+
 def load_config():
     """Load the configuration from the YAML file."""
-    file_path= 'C:\RBC\github_actions\githubworkflow\config\parameters_config.yml'
+    file_path = 'C:\RBC\github_actions\githubworkflow\config\parameters_config.yml'
     try:
         with open(file_path, 'r') as file:
             return yaml.safe_load(file)
