@@ -3,7 +3,7 @@
 import yaml
 import os
 
-def load_config(file_path='C://RBC//github_actions//githubworkflow//config//parameters_config.yml'):
+def load_config(file_path='config//parameters_config.yml'):
     """Load the configuration from the YAML file."""
     global abs_file_path
     try:
