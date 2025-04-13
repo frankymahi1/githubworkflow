@@ -77,15 +77,15 @@
         echo "Running script for ${{ matrix.job }}"
        run: |
           if [ "${{ matrix.job }}" == "sql_to_azure" ]; then
-            pytest test/data_registration.py
+            pytest test/poc_test/test_data_registration.py
           elif [ "${{ matrix.job }}" == "nas_to_azure" ]; then
-            pytest test/data_registration.py
+            pytest test/poc_test/test_data_registration.py
           elif [ "${{ matrix.job }}" == "s3_to_azure" ]; then
-            pytest test/data_registration.py
+            pytest test/poc_test/test_data_registration.py
           elif [ "${{ matrix.job }}" == "schema_registration" ]; then
-            pytest test/data_registration.py
+            pytest test/poc_test/test_data_registration.py
           elif [ "${{ matrix.job }}" == "rest_api_to_azure" ]; then
-            pytest test/data_registration.py
+            pytest test/poc_test/test_data_registration.py
           fi
 
 #     - name: Step 1 - Execute data Registration
