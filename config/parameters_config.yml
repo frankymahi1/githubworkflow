@@ -1,0 +1,33 @@
+nas_to_azure:
+  - file_type: csv
+    raw_source_path: /path/to/nas/csv
+    dest_path: /path/to/azure/csv
+    transformation_flag: true
+    cluster_type: small
+
+  - file_type: txt
+    raw_source_path: /path/to/nas/txt
+    dest_path: /path/to/azure/txt
+    cluster_type: small
+
+  - file_type: json
+    raw_source_path: /path/to/nas/json
+    dest_path: /path/to/azure/json
+    cluster_type: large
+
+s3_to_azure:
+  - file_type: csv
+    raw_source_path: /path/to/s3/csv
+    dest_path: /path/to/azure/csv
+    transformation_flag: true
+    cluster_type: small
+
+  - file_type: txt
+    raw_source_path: /path/to/s3/txt
+    dest_path: /path/to/azure/txt
+    cluster_type: large
+
+  - file_type: json
+    raw_source_path: /path/to/s3/json
+    dest_path: /path/to/azure/json
+    cluster_type: large
