@@ -68,15 +68,15 @@ jobs:
     - name: Execute all jobs
       run: |
         echo "Running SQL to Azure tests"
-        pytest test/poc_test/test_data_registration.py --job=sql_to_azure
+        pytest test/poc_test/test_data_registration.py
         echo "Running NAS to Azure tests"
-        pytest test/poc_test/test_data_registration.py --job=nas_to_azure
+        pytest test/poc_test/test_data_registration.py
         echo "Running S3 to Azure tests"
-        pytest test/poc_test/test_data_registration.py --job=s3_to_azure
+        pytest test/poc_test/test_data_registration.py
         echo "Running Cybase to Azure tests"
-        pytest test/poc_test/test_data_registration.py --job=cybase_to_azure
+        pytest test/poc_test/test_data_registration.py
         echo "Running REST API to Azure tests"
-        pytest test/poc_test/test_data_registration.py --job=rest_api_to_azure
+        pytest test/poc_test/test_data_registration.py
 
       
 
