@@ -1,129 +1,160 @@
+name: Python application
 
- # .github/workflows/python-app.yml
+on:
+  push:
+    branches: [ main, github_test_branch, github_test_branch_v1 ]
+  pull_request:
+    branches: [ main, github_test_branch, github_test_branch_v1 ]
+  workflow_dispatch:  # Allows manual triggering of the workflow
 
- name: Python application
+jobs:
+  test_data_generation:
+    runs-on: ubuntu-latest
 
- on:
-    push:
-      branches: [ main, github_test_branch,github_test_branch_v1 ]
-    pull_request:
-      branches: [ main, github_test_branch,github_test_branch_v1 ]
-    workflow_dispatch:  # Allows manual triggering of the workflow
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
- jobs:
-   test_data_generation:
-     runs-on: ubuntu-latest
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
 
-     steps:
-     - name: Checkout repository
-       uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
 
-     - name: Set up Python
-       uses: actions/setup-python@v2
-       with:
-         python-version: '3.x'
+  build:
+    needs: test_data_generation
+    runs-on: ubuntu-latest
 
-     - name: Install dependencies
-       run: |
-         python -m pip install --upgrade pip
-         pip install -r requirements.txt
+    steps:
+    - uses: actions/checkout@v2
 
-   build:
-     needs: test_data_generation
-     runs-on: ubuntu-latest
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
 
-     steps:
-     - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
 
-     - name: Set up Python
-       uses: actions/setup-python@v2
-       with:
-         python-version: '3.x'
+    - name: Run tests
+      run: |
+        pytest
 
-     - name: Install dependencies
-       run: |
-         python -m pip install --upgrade pip
-         pip install -r requirements.txt
+  execute_all_jobs:
+    runs-on: ubuntu-latest
+    needs: build
 
-     - name: Run tests
-       run: |
-         pytest
+    steps:
+    - name: Trigger all jobs
+      run: echo "This job will trigger all other jobs."
 
-   run_end_to_end_flows:
-     ##if: github.event_name == 'workflow_dispatch'  # Only run if manually triggered
-     runs-on: ubuntu-latest
-     needs: build  # This line makes run_end_to_end_flows dependent on build
-     strategy:
-       matrix:
-         job: [ sql_to_azure, nas_to_azure, s3_to_azure, cybase_to_azure, rest_api_to_azure ]
+  sql_to_azure:
+    runs-on: ubuntu-latest
+    needs: [build, execute_all_jobs]
 
-     steps:
-     - uses: actions/checkout@v2
+    steps:
+    - uses: actions/checkout@v2
 
-     - name: Set up Python
-       uses: actions/setup-python@v2
-       with:
-         python-version: '3.x'
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
 
-     - name: Install dependencies
-       run: |
-         python -m pip install --upgrade pip
-         pip install -r requirements.txt
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
 
-     - name: Print GitHub Event Name
-       run: |
-        echo "GitHub Event Name: ${{ github.event_name }}"
-     - name: Execute specific script
-        echo "Running script for ${{ matrix.job }}"
-       run: |
-          if [ "${{ matrix.job }}" == "sql_to_azure" ]; then
-            pytest test/poc_test/test_data_registration.py
-          elif [ "${{ matrix.job }}" == "nas_to_azure" ]; then
-            pytest test/poc_test/test_data_registration.py
-          elif [ "${{ matrix.job }}" == "s3_to_azure" ]; then
-            pytest test/poc_test/test_data_registration.py
-          elif [ "${{ matrix.job }}" == "schema_registration" ]; then
-            pytest test/poc_test/test_data_registration.py
-          elif [ "${{ matrix.job }}" == "rest_api_to_azure" ]; then
-            pytest test/poc_test/test_data_registration.py
-          fi
+    - name: Run SQL to Azure tests
+      run: |
+        pytest test/poc_test/test_data_registration.py
 
-#     - name: Step 1 - Execute data Registration
-#       run: python test/test_data_registration.py
-#
-#     - name: Step 2 - Execute schema Registration
-#       run: python test/test_schema_registration.py
-#     - name: Step 3 - Test calculator functionality
-#       env:
-#         PYTHONPATH: ./src
-#       run: python test/test_calculator.py
-   Reporting:
-     runs-on: ubuntu-latest
-     needs: run_end_to_end_flows
-     steps:
-     - uses: actions/checkout@v2
+  nas_to_azure:
+    runs-on: ubuntu-latest
+    needs: [build, execute_all_jobs]
 
-     - name: Set up Python
-       uses: actions/setup-python@v2
-       with:
-         python-version: '3.x'
-   dataset_registation:
-     runs-on: ubuntu-latest
-     needs: run_end_to_end_flows
-     steps:
-     - uses: actions/checkout@v2
+    steps:
+    - uses: actions/checkout@v2
 
-     - name: Set up Python
-       uses: actions/setup-python@v2
-       with:
-         python-version: '3.x'
-   cybase_to_azure:
-     runs-on: ubuntu-latest
-     needs: run_end_to_end_flows
-     steps:
-       - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
 
-       - name: Set up Python
-         uses: actions/setup-python@v2
-         with:
-           python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run NAS to Azure tests
+      run: |
+        pytest test/poc_test/test_data_registration.py
+
+  s3_to_azure:
+    runs-on: ubuntu-latest
+    needs: [build, execute_all_jobs]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run S3 to Azure tests
+      run: |
+        pytest test/poc_test/test_data_registration.py
+
+  cybase_to_azure:
+    runs-on: ubuntu-latest
+    needs: [build, execute_all_jobs]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Cybase to Azure tests
+      run: |
+        pytest test/poc_test/test_data_registration.py
+
+  rest_api_to_azure:
+    runs-on: ubuntu-latest
+    needs: [build, execute_all_jobs]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run REST API to Azure tests
+      run: |
+        pytest test/poc_test/test_data_registration.py
