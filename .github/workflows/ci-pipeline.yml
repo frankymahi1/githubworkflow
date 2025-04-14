@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [ main, github_test_branch, github_test_branch_v1 ]
   workflow_dispatch:  # Allows manual triggering of the workflow
+    inputs:
+      run_execute_all_jobs:
+        description: 'Run execute_all_jobs'
+        required: false
+        default: 'false'
 
 jobs:
   test_data_generation:
@@ -47,7 +52,7 @@ jobs:
         pytest
 
   execute_all_jobs:
-    if: github.event_name == 'workflow_dispatch'  # Only run if manually triggered
+    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.run_execute_all_jobs == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -75,8 +80,6 @@ jobs:
         pytest test/poc_test/test_data_registration.py
         echo "Running REST API to Azure tests"
         pytest test/poc_test/test_data_registration.py
-
-      
 
   sql_to_azure:
     runs-on: ubuntu-latest
