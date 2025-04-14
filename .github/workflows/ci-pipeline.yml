@@ -52,6 +52,7 @@ jobs:
         pytest
 
   execute_all_jobs:
+    needs: build
     if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.run_execute_all_jobs == 'true' }}
     runs-on: ubuntu-latest
 
